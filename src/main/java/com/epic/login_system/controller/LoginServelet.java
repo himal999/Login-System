@@ -4,6 +4,9 @@
  */
 package com.epic.login_system.controller;
 
+import com.epic.login_system.bo.LoginBo;
+import com.epic.login_system.bo.LoginBoImpl;
+import com.epic.login_system.dto.Login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,22 +20,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginServelet extends HttpServlet {
 
-   private String userName;
-   private String password;
-    
-   private LoginServelet loginServelet;
-    
-    private LoginServelet(String userName,String password){
-        this.userName = userName;
-        this.password = password;
-    }
+    private LoginBo login = new LoginBoImpl();
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-       
-        loginServelet  = new LoginServelet(req.getParameter("username"),req.getParameter("password"));
-        PrintWriter writer = resp.getWriter();
-        writer.print(this.userName +" "+this.password);
 
-     }
+        if (login.isValid(req.getParameter("username"), req.getParameter("password"))) {
+
+            PrintWriter writer = resp.getWriter();
+            writer.print("hello");
+        }
+    }
 }
