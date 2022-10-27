@@ -13,12 +13,13 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author himal
  */
-public class LoginServelet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     private LoginBo login = new LoginBoImpl();
     private PrintWriter writer;
@@ -30,8 +31,11 @@ public class LoginServelet extends HttpServlet {
 
         if (state.equalsIgnoreCase("SUCCESS")) {
 
-            writer = resp.getWriter();
-            writer.print("Success Login !!!");
+            HttpSession session = req.getSession();
+
+            session.setAttribute("username", req.getParameter("username"));
+            resp.sendRedirect("dashboard.jsp");
+
         } else if (state.equalsIgnoreCase("USERNAME_PASSWORD_INCORRECT")) {
             writer = resp.getWriter();
             writer.print("Please enter corrent username and password !!!");
@@ -41,7 +45,7 @@ public class LoginServelet extends HttpServlet {
         } else if (state.equalsIgnoreCase("PASSWORD_INCORRECT")) {
             writer = resp.getWriter();
             writer.print("Please enter corrent password !!!");
-        } else if(state.equalsIgnoreCase("FAILD")) {
+        } else if (state.equalsIgnoreCase("FAILD")) {
             writer = resp.getWriter();
             writer.print("faild to login !!!");
         }
