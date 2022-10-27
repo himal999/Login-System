@@ -6,10 +6,10 @@ package com.epic.login_system.controller;
 
 import com.epic.login_system.bo.LoginBo;
 import com.epic.login_system.bo.LoginBoImpl;
-import com.epic.login_system.dto.Login;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,14 +21,30 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServelet extends HttpServlet {
 
     private LoginBo login = new LoginBoImpl();
+    private PrintWriter writer;
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        if (login.isValid(req.getParameter("username"), req.getParameter("password"))) {
+        String state = login.isValid(req.getParameter("username"), req.getParameter("password"));
 
-            PrintWriter writer = resp.getWriter();
-            writer.print("hello");
+        if (state.equalsIgnoreCase("SUCCESS")) {
+
+            writer = resp.getWriter();
+            writer.print("Success Login !!!");
+        } else if (state.equalsIgnoreCase("USERNAME_PASSWORD_INCORRECT")) {
+            writer = resp.getWriter();
+            writer.print("Please enter corrent username and password !!!");
+        } else if (state.equalsIgnoreCase("USERNAME_INCORRECT")) {
+            writer = resp.getWriter();
+            writer.print("Please enter corrent username !!!");
+        } else if (state.equalsIgnoreCase("PASSWORD_INCORRECT")) {
+            writer = resp.getWriter();
+            writer.print("Please enter corrent password !!!");
+        } else if(state.equalsIgnoreCase("FAILD")) {
+            writer = resp.getWriter();
+            writer.print("faild to login !!!");
         }
+
     }
 }

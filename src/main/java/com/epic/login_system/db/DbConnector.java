@@ -14,15 +14,16 @@ import java.sql.SQLException;
  */
 public class DbConnector {
 
-    private DbConnector dbConnector;
+    private static DbConnector dbConnector;
     private Connection connection;
 
-    private DbConnector() throws ClassNotFoundException, SQLException {
+    private DbConnector() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+      
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc://localhost:3306/loginDb", "root", "");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginDb", "root", "");
     }
 
-    public DbConnector getInstance() throws ClassNotFoundException, SQLException {
+    public static DbConnector getInstance() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         return dbConnector == null ? dbConnector = new DbConnector() : dbConnector;
     }
 

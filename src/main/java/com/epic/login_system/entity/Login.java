@@ -1,16 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.epic.login_system.dto;
+
+package com.epic.login_system.entity;
 
 /**
  *
  * @author himal
  */
 public class Login {
-   private String userName;
-   private String password;
+     private String userName;
+     private String password;
 
     public Login() {
     }
@@ -42,8 +39,4 @@ public class Login {
     public String toString() {
         return "Login{" + "userName=" + userName + ", password=" + password + '}';
     }
-    
-    
-    
-    
 }
