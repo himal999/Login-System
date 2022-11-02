@@ -4,11 +4,17 @@
  */
 package com.epic.login_system.controller;
 
+import com.epic.login_system.bo.DashboardBo;
+import com.epic.login_system.bo.DashboardBoImpl;
 import com.epic.login_system.bo.LoginBo;
 import com.epic.login_system.bo.LoginBoImpl;
+import com.epic.login_system.dto.UserDto;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.DispatcherType;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +31,29 @@ public class LoginServlet extends HttpServlet {
     private PrintWriter writer;
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        writer = resp.getWriter();
+        String type = req.getParameter("type");
+        if (type.equalsIgnoreCase("login")) {
+            if (login.isCheckAlredyUserName(req.getParameter("username"))) {
+
+                writer.print("true");
+            } else {
+                writer.print("false");
+            }
+        } else {
+
+            if (!login.isRegisterUser(req.getParameter("username"))) {
+                writer.print("true");
+            } else {
+                writer.print("false");
+            }
+        }
+
+    }
+
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
         String state = login.isValid(req.getParameter("username"), req.getParameter("password"));
 
@@ -34,20 +62,23 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
 
             session.setAttribute("username", req.getParameter("username"));
+
+            DashboardBo bo = new DashboardBoImpl();
+            UserDto userData = bo.getUserData(req.getParameter("username"));
+
+            session.setAttribute("user", userData);
+
             resp.sendRedirect("dashboard.jsp");
 
-        } else if (state.equalsIgnoreCase("USERNAME_PASSWORD_INCORRECT")) {
-            writer = resp.getWriter();
-            writer.print("Please enter corrent username and password !!!");
         } else if (state.equalsIgnoreCase("USERNAME_INCORRECT")) {
             writer = resp.getWriter();
-            writer.print("Please enter corrent username !!!");
+            writer.print("USERNAME_INCORRECT");
         } else if (state.equalsIgnoreCase("PASSWORD_INCORRECT")) {
             writer = resp.getWriter();
-            writer.print("Please enter corrent password !!!");
+            writer.print("PASSWORD_INCORRECT");
         } else if (state.equalsIgnoreCase("FAILD")) {
             writer = resp.getWriter();
-            writer.print("faild to login !!!");
+            writer.print("FAILD");
         }
 
     }

@@ -22,27 +22,21 @@ public class LoginDaoImpl implements LoginDao {
 
         try {
 
-            System.out.println("hello 000000");
             Connection connection = DbConnector.getInstance().getConnection();
 
             PreparedStatement pst = connection.prepareStatement("SELECT username,password FROM `user_detail`");
 
-           Login login = new Login();
-           
-//           login.setPassword("1234");
-//           login.setUserName("admin");
-            
-            ResultSet rst = pst.executeQuery();
-               System.out.println("rat");
-          while (rst.next()){
-                System.out.println("xxxxxx");
-                users.add(new Login(rst.getString("username"),rst.getString("password")));
-                System.out.println("11");
-          }
-              
-            
+       
 
-            connection.close();
+            ResultSet rst = pst.executeQuery();
+
+            while (rst.next()) {
+
+                users.add(new Login(rst.getString("username"), rst.getString("password")));
+
+            }
+
+    
         } catch (SQLException ex) {
             System.out.println("Can't load data" + " " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
@@ -52,7 +46,7 @@ public class LoginDaoImpl implements LoginDao {
         } catch (IllegalAccessException ex) {
             Logger.getLogger(LoginDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("get");
+
         return users;
     }
 

@@ -20,7 +20,7 @@ public class DbConnector {
     private DbConnector() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
       
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginDb", "root", "");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/loginDb?autoReconnect=true", "root", "");
     }
 
     public static DbConnector getInstance() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {

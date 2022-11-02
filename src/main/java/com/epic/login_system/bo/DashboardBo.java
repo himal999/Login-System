@@ -4,15 +4,16 @@
  */
 package com.epic.login_system.bo;
 
+import com.epic.login_system.dto.UserDto;
 
 
 /**
  *
  * @author himal
  */
-public interface LoginBo {
-   String isValid(String userName,String passowrd);
-   boolean isCheckAlredyUserName(String username);
-   boolean isRegisterUser(String userName);
-   
+public interface DashboardBo {
+    boolean createUser(UserDto user);
+    UserDto getUserData(String userName);
+    boolean updateUserDetail(UserDto user,String userName);
+    boolean isDeleteUser(String userName);
 }
