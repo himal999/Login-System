@@ -37,29 +37,19 @@ public class DashboardBoImpl implements DashboardBo {
     @Override
     public boolean updateUserDetail(UserDto user, String userName) {
 
-        try {
-            String password = user.getPassword();
+        
+//            String password = user.getPassword();
+//
+//            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
+//            Cipher cipher = Cipher.getInstance("AES");
+//
+//            cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+//            byte[] encrypted = cipher.doFinal(password.getBytes());
+            return dashboardDao.updateUserDetail(user, userName);
 
-            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-            Cipher cipher = Cipher.getInstance("AES");
+       
 
-            cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-            byte[] encrypted = cipher.doFinal(password.getBytes());
-            return dashboardDao.updateUserDetail(new UserDto(user.getUsername(), new String(encrypted), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail()), userName);
-
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPaddingException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeyException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalBlockSizeException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (BadPaddingException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return false;
+        
     }
 
     @Override
@@ -70,29 +60,29 @@ public class DashboardBoImpl implements DashboardBo {
     @Override
     public boolean createUser(UserDto user) {
 
-        try {
-            String password = user.getPassword();
+//        try {
+//             byte[]  password = user.getPassword();
+//
+//            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
+//            Cipher cipher = Cipher.getInstance("AES");
+//
+//            cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+//            byte[] encrypted = cipher.doFinal(password);
 
-            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-            Cipher cipher = Cipher.getInstance("AES");
+            return dashboardDao.addUser(new UserDto(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail()));
 
-            cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-            byte[] encrypted = cipher.doFinal(password.getBytes());
-
-            return dashboardDao.addUser(new UserDto(user.getUsername(), new String(encrypted), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail()));
-
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPaddingException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeyException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalBlockSizeException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (BadPaddingException ex) {
-            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+//        } catch (NoSuchAlgorithmException ex) {
+//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (NoSuchPaddingException ex) {
+//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (InvalidKeyException ex) {
+//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IllegalBlockSizeException ex) {
+//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (BadPaddingException ex) {
+//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
     }
 
 }
