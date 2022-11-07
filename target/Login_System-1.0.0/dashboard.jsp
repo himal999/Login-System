@@ -40,8 +40,8 @@
         <div  class="col-6 vw-100  position-relative d-flex justify-content-between align-items-center ms-auto bg-primary">
             <h1 class="text-start text-light row m-2">Hello  ${username} !</h1>
             <div class="d-flex flex-row ">
-                <form action="logout" method="post">
-                    <button type="submit" class=" btn btn-danger m-2">Logout</button>
+                <form>
+                    <button type="button" class=" btn btn-danger m-2" id="btnlogout">Logout</button>
                 </form>
             </div>
         </div>
@@ -144,20 +144,48 @@
             //   });
             $('#btnDelete').click(function () {
 
-                $.ajax({
-                    type: "delete",
-                    url: "http://localhost:8080/login/dashboard",
 
-                    success: function (msg) {
+                if (confirm("Are you sure want to delete account?")) {
+                    $.ajax({
+                        type: "delete",
+                        url: "http://localhost:8080/login/dashboard",
+
+                        success: function (msg) {
+
+                            if (msg == 'true') {
+                                window.location.href = "index.jsp"
+                            }
 
 
-                        window.location.href = "index.jsp"
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    },
-                });
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        },
+                    });
+                }
+
+
             });
+
+            $('#btnlogout').click(function () {
+                if (confirm("Are you sure want to logout?")) {
+                    $.ajax({
+                        type: "get",
+                        url: "http://localhost:8080/login/logout",
+                        success: function (msg) {
+                            
+                            if(msg == 'true'){
+                                window.location.href = "index.jsp";
+                            }
+                            
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+
+                    })
+                }
+            })
         </script>
     </body>
 </html>

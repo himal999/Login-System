@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.epic.login_system.entity;
+
 import java.util.Date;
 
 /**
@@ -11,14 +11,19 @@ import java.util.Date;
  * @author himal
  */
 public class User {
-   private String username;
-   private String password;
-   private String fname;
-   private String lname;
-   private String nic;
-   private String address;
-   private Date dob;
-   private String email;
+
+    private String username;
+    private String password;
+    private String fname;
+    private String lname;
+    private String nic;
+    private String address;
+    private Date dob;
+    private String email;
+    private String accCreateInfo;
+    private String accUpdateInfo;
+    private String accLastLoginInfo;
+    private String accLastLogoutInfo;
 
     public User() {
     }
@@ -32,6 +37,34 @@ public class User {
         this.address = address;
         this.dob = dob;
         this.email = email;
+    }
+
+    public User(String username, String fname, String lname, String nic, String address, Date dob, String email, String accUpdateInfo) {
+        this.username = username;
+        this.fname = fname;
+        this.lname = lname;
+        this.nic = nic;
+        this.address = address;
+        this.dob = dob;
+        this.email = email;
+        this.accUpdateInfo = accUpdateInfo;
+    }
+    
+    
+
+    public User(String username, String password, String fname, String lname, String nic, String address, Date dob, String email, String accCreateInfo, String accUpdateInfo, String accLastLoginInfo, String accLastLogoutInfo) {
+        this.username = username;
+        this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+        this.nic = nic;
+        this.address = address;
+        this.dob = dob;
+        this.email = email;
+        this.accCreateInfo = accCreateInfo;
+        this.accUpdateInfo = accUpdateInfo;
+        this.accLastLoginInfo = accLastLoginInfo;
+        this.accLastLogoutInfo = accLastLogoutInfo;
     }
 
     public String getUsername() {
@@ -97,6 +130,39 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
+
+    public String getAccCreateInfo() {
+        return accCreateInfo;
+    }
+
+    public void setAccCreateInfo(String accCreateInfo) {
+        this.accCreateInfo = accCreateInfo;
+    }
+
+    public String getAccUpdateInfo() {
+        return accUpdateInfo;
+    }
+
+    public void setAccUpdateInfo(String accUpdateInfo) {
+        this.accUpdateInfo = accUpdateInfo;
+    }
+
+    public String getAccLastLoginInfo() {
+        return accLastLoginInfo;
+    }
+
+    public void setAccLastLoginInfo(String accLastLoginInfo) {
+        this.accLastLoginInfo = accLastLoginInfo;
+    }
+
+    public String getAccLastLogoutInfo() {
+        return accLastLogoutInfo;
+    }
+
+    public void setAccLastLogoutInfo(String accLastLogoutInfo) {
+        this.accLastLogoutInfo = accLastLogoutInfo;
+    }
+
+   
+
 }

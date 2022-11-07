@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpSession;
  */
 public class DashboardServlet extends HttpServlet {
 
-
     //update user
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -40,12 +38,14 @@ public class DashboardServlet extends HttpServlet {
 
         if (userName == null) {
             try {
+              
                 String date = req.getParameter("dob");
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date tempDate = formatter.parse(date);
                 DashboardBo dashboardImpl = new DashboardBoImpl();
-                boolean isAdded = dashboardImpl.createUser(new UserDto(req.getParameter("username"), req.getParameter("password"), req.getParameter("firstname"), req.getParameter("lastname"), req.getParameter("nic"), req.getParameter("address"), tempDate, req.getParameter("email")));
 
+                boolean isAdded = dashboardImpl.createUser(new UserDto(req.getParameter("username"), req.getParameter("password"), req.getParameter("firstname"), req.getParameter("lastname"), req.getParameter("nic"), req.getParameter("address"), tempDate, req.getParameter("email")));
+                PrintWriter writer = resp.getWriter();
                 if (isAdded) {
                     DashboardBo bo = new DashboardBoImpl();
                     UserDto userData = bo.getUserData(req.getParameter("username"));
@@ -53,8 +53,11 @@ public class DashboardServlet extends HttpServlet {
                     HttpSession sess = req.getSession(true);
                     sess.putValue("username", req.getParameter("username"));
                     sess.putValue("user", userData);
-                    resp.sendRedirect("dashboard.jsp");
 
+                    writer.print("true");
+
+                } else {
+                    writer.print("false");
                 }
 
             } catch (ParseException ex) {
@@ -69,7 +72,8 @@ public class DashboardServlet extends HttpServlet {
                 Date tempDate = formatter.parse(date);
                 DashboardBo dashboardImpl = new DashboardBoImpl();
 
-                boolean isUpdate = dashboardImpl.updateUserDetail(new UserDto(req.getParameter("username"), req.getParameter("password"), req.getParameter("firstname"), req.getParameter("lastname"), req.getParameter("nic"), req.getParameter("address"), tempDate, req.getParameter("email")), userName);
+                boolean isUpdate = dashboardImpl.updateUserDetail(new UserDto(req.getParameter("username"), req.getParameter("firstname"), req.getParameter("lastname"), req.getParameter("nic"), req.getParameter("address"), tempDate, req.getParameter("email")), userName);
+                PrintWriter writer = resp.getWriter();
                 if (isUpdate) {
                     DashboardBo bo = new DashboardBoImpl();
                     UserDto userData = bo.getUserData(req.getParameter("username"));
@@ -77,7 +81,13 @@ public class DashboardServlet extends HttpServlet {
                     HttpSession sess = req.getSession(true);
                     sess.putValue("username", req.getParameter("username"));
                     sess.putValue("user", userData);
-                    resp.sendRedirect("dashboard.jsp");
+                   
+                    writer.print("true");
+                }
+                
+                else{
+                       
+                    writer.print("false");
                 }
 
             } catch (ParseException ex) {
@@ -98,7 +108,7 @@ public class DashboardServlet extends HttpServlet {
         if (dashboardImpl.isDeleteUser(userName)) {
             session.removeAttribute("username");
             session.invalidate();
-            resp.sendRedirect("index.jsp");
+             writer.print("true");
         } else {
             writer.print("TRY_AGAIN_DELETED");
         }

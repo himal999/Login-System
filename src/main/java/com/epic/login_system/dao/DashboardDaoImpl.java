@@ -7,6 +7,7 @@ package com.epic.login_system.dao;
 import com.epic.login_system.db.DbConnector;
 import com.epic.login_system.dto.UserDto;
 import com.epic.login_system.entity.User;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -32,7 +33,11 @@ public class DashboardDaoImpl implements DashboardDao {
             pst.setString(1, userName);
             ResultSet rst = pst.executeQuery();
             while (rst.next()) {
-                user = new User(rst.getString("username"), rst.getString("password"), rst.getString("fname"), rst.getString("lname"), rst.getString("nic"), rst.getString("address"), rst.getDate("dob"), rst.getString("email"));
+
+                Blob by = rst.getBlob("password");
+                byte[] bytes = by.getBytes(1, (int) by.length());
+
+                user = new User(rst.getString("username"), new String(bytes), rst.getString("fname"), rst.getString("lname"), rst.getString("nic"), rst.getString("address"), rst.getDate("dob"), rst.getString("email"));
             }
 
         } catch (ClassNotFoundException ex) {
@@ -49,29 +54,27 @@ public class DashboardDaoImpl implements DashboardDao {
     }
 
     @Override
-    public boolean updateUserDetail(UserDto user, String userName) {
+    public boolean updateUserDetail(UserDto user, String userName,String time) {
 
-      
-
-        User tempUser = new User(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail());
+        User tempUser = new User(user.getUsername(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail(),time);
 
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dob = formatter.format(tempUser.getDob());
             Connection connection = DbConnector.getInstance().getConnection();
-            PreparedStatement pst = connection.prepareStatement("UPDATE `user_detail` SET username=?,password=?,fname=?,lname=?,nic=?,address=?,dob=?,email=? WHERE username=?");
+            PreparedStatement pst = connection.prepareStatement("UPDATE `user_detail` SET username=?,fname=?,lname=?,nic=?,address=?,dob=?,email=?,acc_update_info=? WHERE username=?");
             pst.setString(1, tempUser.getUsername());
-            pst.setString(2, tempUser.getPassword());
-            pst.setString(3, tempUser.getFname());
-            pst.setString(4, tempUser.getLname());
-            pst.setString(5, tempUser.getNic());
+            pst.setString(2, tempUser.getFname());
+            pst.setString(3, tempUser.getLname());
+            pst.setString(4, tempUser.getNic());
+            pst.setString(5, tempUser.getAddress());
 
-            pst.setString(6, tempUser.getAddress());
+            pst.setDate(6, Date.valueOf(dob));
 
-            pst.setDate(7, Date.valueOf(dob));
+            pst.setString(7, tempUser.getEmail() );
 
-            pst.setString(8, tempUser.getEmail());
+            pst.setObject(8, tempUser.getAccUpdateInfo());
             pst.setString(9, userName);
 
             if (pst.executeUpdate() > 0) {
@@ -115,16 +118,16 @@ public class DashboardDaoImpl implements DashboardDao {
 
     @Override
     public boolean addUser(UserDto user) {
-         User tempUser = new User(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail());
+        User tempUser = new User(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail(),user.getAccCreateInfo(),user.getAccUpdateInfo(),user.getAccLastLoginInfo(),user.getAccLastLogoutInfo());
 
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dob = formatter.format(tempUser.getDob());
             Connection connection = DbConnector.getInstance().getConnection();
-            PreparedStatement pst = connection.prepareStatement("INSERT INTO `user_detail` VALUES (?,?,?,?,?,?,?,?)");
+            PreparedStatement pst = connection.prepareStatement("INSERT INTO `user_detail` VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             pst.setString(1, tempUser.getUsername());
-            pst.setString(2, tempUser.getPassword());
+            pst.setObject(2, tempUser.getPassword());
             pst.setString(3, tempUser.getFname());
             pst.setString(4, tempUser.getLname());
             pst.setString(5, tempUser.getNic());
@@ -134,7 +137,12 @@ public class DashboardDaoImpl implements DashboardDao {
             pst.setDate(7, Date.valueOf(dob));
 
             pst.setString(8, tempUser.getEmail());
-          
+
+            pst.setObject(9, tempUser.getAccCreateInfo());
+            pst.setObject(10, tempUser.getAccUpdateInfo());
+            pst.setObject(11, tempUser.getAccLastLoginInfo());
+            pst.setObject(12,tempUser.getAccLastLogoutInfo());
+           
 
             if (pst.executeUpdate() > 0) {
                 return true;

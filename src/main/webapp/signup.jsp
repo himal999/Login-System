@@ -11,10 +11,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>New Account</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <style>
+            #my{
+                background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYvFDJf1NcZsfqDnUjGU7aerP43FRKd4wFKg&usqp=CAU');
+                background-size: cover;
+                background-position: 100%
+                
+            }
+        </style>
     </head>
     <body class="vh-100 vw-100 d-flex position-relative flex-column justify-content-center align-items-center">
 
-        <div class="col d-flex position-relative flex-column justify-content-center align-items-center">
+        <div id="my"class="col d-flex position-relative flex-column justify-content-center align-items-center">
             <h1 class="text-center row">Create Account</h1>
             <form action="dashboard" method="post">
                 <input type="text" placeholder="Enter User Name" id="txtUserName" class="row form-control m-2" name="username"  required="true"/>

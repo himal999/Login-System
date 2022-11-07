@@ -4,7 +4,10 @@
  */
 package com.epic.login_system.controller;
 
+import com.epic.login_system.bo.LogoutBo;
+import com.epic.login_system.bo.LogoutBoImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.http.HttpServlet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,17 +19,23 @@ import javax.servlet.http.HttpSession;
  * @author himal
  */
 public class LogoutServlet extends HttpServlet {
-    
+
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-      
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        LogoutBo logout = new LogoutBoImpl();
         HttpSession session = req.getSession();
-        session.removeAttribute("username");
-        session.invalidate();
-        resp.sendRedirect("index.jsp");
-        
-      
+
+        PrintWriter writer = resp.getWriter();
+
+       
+        if (logout.isInfoUpdate(String.valueOf(session.getAttribute("username")))) {
+            session.removeAttribute("username");
+            session.invalidate();
+            writer.print("true");
+        } else {
+            writer.print("false");
+        }
     }
-    
+
 }
-   

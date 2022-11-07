@@ -14,6 +14,6 @@ import com.epic.login_system.entity.User;
 public interface DashboardDao {
   boolean addUser(UserDto user);
   User getAllData(String userName);  
-  boolean updateUserDetail(UserDto user,String userName);
+  boolean updateUserDetail(UserDto user,String userName,String time);
   boolean deleteUser(String userName);
 }

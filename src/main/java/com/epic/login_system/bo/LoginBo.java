@@ -14,5 +14,6 @@ public interface LoginBo {
    String isValid(String userName,String passowrd);
    boolean isCheckAlredyUserName(String username);
    boolean isRegisterUser(String userName);
-   
+   boolean isAlredyNic(String nic);
+   boolean isAlreadyEmail(String email);
 }

@@ -11,6 +11,8 @@ import com.epic.login_system.entity.User;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
@@ -32,20 +34,15 @@ public class DashboardBoImpl implements DashboardBo {
     public UserDto getUserData(String userName) {
         User user = dashboardDao.getAllData(userName);
         return new UserDto(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail());
+       
     }
 
     @Override
     public boolean updateUserDetail(UserDto user, String userName) {
 
-        
-//            String password = user.getPassword();
-//
-//            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-//            Cipher cipher = Cipher.getInstance("AES");
-//
-//            cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-//            byte[] encrypted = cipher.doFinal(password.getBytes());
-            return dashboardDao.updateUserDetail(user, userName);
+           String time  = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().getTime());
+
+            return dashboardDao.updateUserDetail(user, userName,time);
 
        
 
@@ -60,29 +57,11 @@ public class DashboardBoImpl implements DashboardBo {
     @Override
     public boolean createUser(UserDto user) {
 
-//        try {
-//             byte[]  password = user.getPassword();
-//
-//            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-//            Cipher cipher = Cipher.getInstance("AES");
-//
-//            cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-//            byte[] encrypted = cipher.doFinal(password);
 
-            return dashboardDao.addUser(new UserDto(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail()));
+            String time  = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().getTime());
+            return dashboardDao.addUser(new UserDto(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail(),time,time,time));
 
-//        } catch (NoSuchAlgorithmException ex) {
-//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (NoSuchPaddingException ex) {
-//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (InvalidKeyException ex) {
-//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IllegalBlockSizeException ex) {
-//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (BadPaddingException ex) {
-//            Logger.getLogger(DashboardBoImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return false;
+
     }
 
 }

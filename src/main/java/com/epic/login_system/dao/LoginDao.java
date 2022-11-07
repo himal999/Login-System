@@ -6,6 +6,7 @@ package com.epic.login_system.dao;
 
 
 import com.epic.login_system.entity.Login;
+import com.epic.login_system.entity.User;
 import java.util.List;
 
 /**
@@ -14,5 +15,6 @@ import java.util.List;
  */
 public interface LoginDao {
    List<Login> getUsernamePassword();
-   
+   List<User> getAllUser();
+   boolean updateLoginInfo(String userName,String time);
 }
