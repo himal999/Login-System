@@ -26,7 +26,7 @@ public class LogoutDaoImpl implements LogoutDao {
             PreparedStatement pst = connection.prepareStatement("UPDATE `user_detail` SET acc_last_logout=? WHERE username=?");
             pst.setObject(1, time);
             pst.setObject(2, userName);
-
+        
             if (pst.executeUpdate() > 0) {
                 return true;
             }

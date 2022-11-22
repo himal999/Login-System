@@ -38,7 +38,7 @@ public class DashboardServlet extends HttpServlet {
 
         if (userName == null) {
             try {
-              
+
                 String date = req.getParameter("dob");
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date tempDate = formatter.parse(date);
@@ -64,7 +64,7 @@ public class DashboardServlet extends HttpServlet {
                 Logger.getLogger(DashboardServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-
+            PrintWriter writer = resp.getWriter();
             try {
 
                 String date = req.getParameter("dob");
@@ -73,7 +73,7 @@ public class DashboardServlet extends HttpServlet {
                 DashboardBo dashboardImpl = new DashboardBoImpl();
 
                 boolean isUpdate = dashboardImpl.updateUserDetail(new UserDto(req.getParameter("username"), req.getParameter("firstname"), req.getParameter("lastname"), req.getParameter("nic"), req.getParameter("address"), tempDate, req.getParameter("email")), userName);
-                PrintWriter writer = resp.getWriter();
+
                 if (isUpdate) {
                     DashboardBo bo = new DashboardBoImpl();
                     UserDto userData = bo.getUserData(req.getParameter("username"));
@@ -81,17 +81,15 @@ public class DashboardServlet extends HttpServlet {
                     HttpSession sess = req.getSession(true);
                     sess.putValue("username", req.getParameter("username"));
                     sess.putValue("user", userData);
-                   
+
                     writer.print("true");
-                }
-                
-                else{
-                       
+                } else {
+
                     writer.print("false");
                 }
 
             } catch (ParseException ex) {
-                Logger.getLogger(DashboardServlet.class.getName()).log(Level.SEVERE, null, ex);
+                writer.print("false");
             }
 
         }
@@ -108,7 +106,7 @@ public class DashboardServlet extends HttpServlet {
         if (dashboardImpl.isDeleteUser(userName)) {
             session.removeAttribute("username");
             session.invalidate();
-             writer.print("true");
+            writer.print("true");
         } else {
             writer.print("TRY_AGAIN_DELETED");
         }

@@ -19,7 +19,7 @@ public class LogoutBoImpl implements LogoutBo {
 
     @Override
     public boolean isInfoUpdate(String userName) {
-        System.out.println(userName);
+      
 
         String time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().getTime());
 

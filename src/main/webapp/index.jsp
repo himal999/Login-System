@@ -649,7 +649,12 @@
 
                     },
                     error: function (err) {
-                        console.log(err)
+                            $('#errortext').text("LOGIN FAILD");
+                            $('#errorsubtext').text('Invalid User Name or Password');
+                            $('#lblerrocontainer').css('border-left', '5px red solid')
+                            $('#errorimg').attr('src', './assets/css/faild.png');
+                            $('#lblerrormsg').show();
+                            setTimeout(setTimerErro, 2000);
                     }
 
 
@@ -703,7 +708,12 @@
 
 
                     }, error: function (err) {
-                        console.log(err)
+                           $('#errortext').text("FAIL TO CREATE");
+                            $('#errorsubtext').text('Please try again');
+                            $('#lblerrocontainer').css('border-left', '5px red solid')
+                            $('#errorimg').attr('src', './assets/css/faild.png');
+                            $('#lblerrormsg').show();
+                            setTimeout(setTimerErro, 2000);
                     }
                 })
             }

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.epic.login_system.dao;
 
 import com.epic.login_system.db.DbConnector;
@@ -118,14 +115,14 @@ public class DashboardDaoImpl implements DashboardDao {
 
     @Override
     public boolean addUser(UserDto user) {
-        User tempUser = new User(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail(),user.getAccCreateInfo(),user.getAccUpdateInfo(),user.getAccLastLoginInfo(),user.getAccLastLogoutInfo());
+        User tempUser = new User(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getNic(), user.getAddress(), user.getDob(), user.getEmail(),user.getAccCreateInfo(),user.getAccUpdateInfo(),user.getAccLastLoginInfo());
 
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dob = formatter.format(tempUser.getDob());
             Connection connection = DbConnector.getInstance().getConnection();
-            PreparedStatement pst = connection.prepareStatement("INSERT INTO `user_detail` VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pst = connection.prepareStatement("INSERT INTO `user_detail`(username,password,fname,lname,nic,address,dob,email,acc_create_info,acc_last_login,acc_update_info) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             pst.setString(1, tempUser.getUsername());
             pst.setObject(2, tempUser.getPassword());
             pst.setString(3, tempUser.getFname());
@@ -139,9 +136,9 @@ public class DashboardDaoImpl implements DashboardDao {
             pst.setString(8, tempUser.getEmail());
 
             pst.setObject(9, tempUser.getAccCreateInfo());
-            pst.setObject(10, tempUser.getAccUpdateInfo());
-            pst.setObject(11, tempUser.getAccLastLoginInfo());
-            pst.setObject(12,tempUser.getAccLastLogoutInfo());
+            pst.setObject(10, tempUser.getAccLastLoginInfo());
+            pst.setObject(11, tempUser.getAccUpdateInfo());
+           
            
 
             if (pst.executeUpdate() > 0) {

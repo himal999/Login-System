@@ -8,18 +8,10 @@ import com.epic.login_system.dao.DashboardDao;
 import com.epic.login_system.dao.DashboardDaoImpl;
 import com.epic.login_system.dto.UserDto;
 import com.epic.login_system.entity.User;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
+
 
 /**
  *
@@ -28,7 +20,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class DashboardBoImpl implements DashboardBo {
 
     private DashboardDao dashboardDao = new DashboardDaoImpl();
-    private String key = "Bar12345Bar12345";
+
 
     @Override
     public UserDto getUserData(String userName) {

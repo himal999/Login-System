@@ -39,6 +39,23 @@ public class User {
         this.email = email;
     }
 
+    public User(String username, String password, String fname, String lname, String nic, String address, Date dob, String email, String accCreateInfo, String accUpdateInfo, String accLastLoginInfo) {
+        this.username = username;
+        this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+        this.nic = nic;
+        this.address = address;
+        this.dob = dob;
+        this.email = email;
+        this.accCreateInfo = accCreateInfo;
+        this.accUpdateInfo = accUpdateInfo;
+        this.accLastLoginInfo = accLastLoginInfo;
+    }
+    
+    
+    
+
     public User(String username, String fname, String lname, String nic, String address, Date dob, String email, String accUpdateInfo) {
         this.username = username;
         this.fname = fname;

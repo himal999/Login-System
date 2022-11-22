@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class DbConnector {
 
     private static DbConnector dbConnector;
-    private Connection connection;
+    private  Connection connection;
 
     private DbConnector() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
       

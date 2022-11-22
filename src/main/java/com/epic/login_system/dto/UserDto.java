@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class UserDto {
 
-  private String username;
+    private String username;
     private String password;
     private String fname;
     private String lname;

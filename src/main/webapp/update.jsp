@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Update Details ${user.getUsername()}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
 
             *{
@@ -98,6 +99,7 @@
 
         %>
 
+
         <div id="lblerrormsg" style=" width:100%;height: auto;position: absolute;display: flex;flex-direction: column;justify-content: right;align-items:end">
             <div id="lblerrocontainer" style=" background-color: white; border-left: 5px red solid; padding: 10px; display: flex;flex-direction: row;justify-content: center;align-items: center">
                 <img id="errorimg" src="./assets/css/faild.png" alt="alt" width="55px" height="40px"/>
@@ -113,7 +115,11 @@
 
             <div class="cart">
                 <div style=" padding: 10px;padding-bottom: 20px;padding-top: 20px;display: flex;flex-direction: column;width: 100%;height: 100%;justify-content: center;align-items: center">
-                    <h1 style=" margin-bottom: 20px" >Edit Info</h1>
+                    <div style="display: flex;flex-direction: row;justify-content:start;align-items:start; width: 100%;">
+                        <i class="fa-solid fa-arrow-left" style=" cursor: pointer;font-size: 20px" id="btnBack"></i>
+
+                    </div>
+                    <h1  style=" margin-bottom: 20px">Edit Info</h1>
                     <form style=" display: flex;flex-direction: column; justify-content: left;align-items: center">
 
                         <div style="margin-bottom: 12px;display:flex;flex-direction: column;width: 250px">
@@ -222,8 +228,10 @@
 
 
                         </div>
-                        <div  style="display: flex;flex-direction: column;align-items: center;width: 100%" >
-                            <button id="btnUpdateUser" type="button" style="color: white; width: 90%; position: relative; left: -1px; text-align: center; border: none;outline: none;margin-top: 25px; padding-top: 10px;padding-bottom: 10px;border-radius: 20px;font-size: 17px; background-color: #1e3799" >UPDATE</button>
+                        <div  style="display: flex;flex-direction: row;align-items: center;width: 90%; justify-content: space-between;align-items: center;margin-top: 10px" >
+
+                            <button id="btnClear" type="button" style="color: white;  text-align: center; border: none;outline: none;border-radius: 20px;font-size: 17px; background-color:#4b6584;padding: 10px" >Clear</button>
+                            <button id="btnUpdateUser" type="button" style="color: white;  text-align: center; border: none;outline: none;border-radius: 20px;font-size: 17px; background-color: #1e3799;padding: 10px" >Update</button>
                         </div>
 
                     </form>
@@ -386,6 +394,7 @@
                             $('#lblerrocontainer').css('border-left', '5px green solid')
                             $('#errorimg').attr('src', './assets/css/success.png');
                             $('#lblerrormsg').show();
+                            clearField();
                             setTimeout(setTimerSucces, 2000);
                         } else if (msg == 'false') {
                             $('#errortext').text("FAIL TO UPDATE");
@@ -400,7 +409,12 @@
 
 
                     }, error: function (err) {
-                        console.log(err)
+                        $('#errortext').text("FAIL TO UPDATE");
+                        $('#errorsubtext').text('Please try again');
+                        $('#lblerrocontainer').css('border-left', '5px red solid')
+                        $('#errorimg').attr('src', './assets/css/faild.png');
+                        $('#lblerrormsg').show();
+                        setTimeout(setTimerErro, 2000);
                     }
                 })
             }
@@ -433,6 +447,22 @@
                         }
                     }
                 });
+            }
+            $('#btnClear').click(function () {
+                clearField();
+            });
+            $('#btnBack').click(function () {
+                window.location.href = "dashboard.jsp"
+            });
+            function clearField() {
+                $('#txtUserName').val("");
+                $('#txtFirstName').val("");
+                $('#txtLastName').val("");
+                $('#txtNic').val("");
+                $('#txtAddress').val("");
+                $('#txtDOB').val("");
+                $('#txtEmail').val("");
+
             }
         </script>
     </body>
